@@ -34,6 +34,6 @@ def evaluate(y_predict, y_test):
     accuracy_precent_val = accuracy_score(y_test, y_predict,normalize=True)
     print(f'SSE = {sse_val}')
     print(f'Accuracy = {accuracy_val}')
-    print(f'Accuracy percent = {accuracy_precent_val}')
+    print(f'Accuracy percent = {accuracy_precent_val * 100}%')
 #     print(sse_val, accuracy_val, accuracy_precent_val)
 #     return sse_val, accuracy_val
