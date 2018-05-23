@@ -1,4 +1,6 @@
+from sklearn import metrics
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import cross_val_predict
 
 def sse(est, real):
     sse = 0
@@ -36,4 +38,8 @@ def evaluate(y_predict, y_test):
     print(f'Accuracy = {accuracy_val}')
     print(f'Accuracy percent = {accuracy_precent_val * 100}%')
 #     print(sse_val, accuracy_val, accuracy_precent_val)
-#     return sse_val, accuracy_val
+    return [sse_val, accuracy_val, accuracy_precent_val]
+
+def cross_val(clf, df, y, cv=10):
+    predicted = cross_val_predict(clf, df, y, cv=10)
+    return metrics.accuracy_score(y, predicted) 
