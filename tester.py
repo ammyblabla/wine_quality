@@ -1,6 +1,10 @@
 from sklearn import metrics
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_predict
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics.scorer import make_scorer
+from sklearn.metrics import recall_score
+from sklearn.model_selection import cross_validate
 
 def sse(est, real):
     sse = 0
@@ -43,3 +47,12 @@ def evaluate(y_predict, y_test):
 def cross_val(clf, df, y, cv=10):
     predicted = cross_val_predict(clf, df, y, cv=10)
     return metrics.accuracy_score(y, predicted) 
+
+def cross_val_accuracy(clf, df, y, cv=10):
+    scores = cross_val_score(clf, df, y, cv=10)
+    print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+
+def cross_val_full_scores(clf, df, y, cv=10):
+    scoring = {'prec_macro': 'precision_macro',
+            'rec_micro': make_scorer(recall_score, average='macro')}
+    scores = cross_validate(clf, df, y, scoring=scoring,cv=10, return_train_score=True)
